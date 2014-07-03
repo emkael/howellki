@@ -140,11 +140,11 @@ var Pair = function(startingPosition, number, movement) {
 	    if (position) {
 		that.players[i] = position;
 		var pos = that.movement.tables.getPosition(position, that.size);
-		that.containers[i].animate(pos, 1000, 'easeInOutBack');
+		that.containers[i].animate(pos, 1000);
 		position = position.replace('N', 'S').replace('E', 'W');
 	    }
 	    else {
-		that.containers[i].animate({left: 0, top: 0}, 1000, 'easeInOutBack');
+		that.containers[i].animate({left: 0, top: 0}, 1000);
 	    }
 	}
     }
