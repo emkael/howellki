@@ -25,6 +25,7 @@ Instalacja
 2. W katalogu [/js/](js/) dołączyć wymagane biblioteki JS (zamieniając dowiązania symboliczne na właściwe bądź zastepując je katalogami).
 
 Opcjonalne wygenerowanie pliku rotacji ([movements.json](movements.json)):
+
 1. Umieścić w katalogu roboczym plik howell.dat w formacie KoPSa.
 2. Uruchomić skrypt [how.php](how.php).
 
