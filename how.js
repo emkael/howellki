@@ -152,7 +152,7 @@ var Pair = function(startingPosition, number, movement) {
     that.display = function() {
 	for (var i = 0; i < 2; i++) {
 	    movement.viewport.container.append(that.containers[i]);
-	    that.containers[i].animate(that.movement.tables.getPosition(that.players[i], that.size), 1000, 'easeInOutBack');
+	    that.containers[i].animate(that.movement.tables.getPosition(that.players[i], that.size), 1000
 	}
     }
 }
@@ -191,10 +191,10 @@ var Set = function(startingPosition, movement, number) {
     that.moveTo = function(position) {
 	that.position = position;
 	if (position) {
-	    that.container.animate(that.getPosition(position), 1000, 'easeInOutBack');
+	    that.container.animate(that.getPosition(position), 1000);
 	}
 	else {
-	    that.container.animate({left: 0, top: that.movement.viewport.height - that.size}, 1000, 'easeInOutBack');
+	    that.container.animate({left: 0, top: that.movement.viewport.height - that.size}, 1000);
 	}
     }
 
