@@ -1,17 +1,17 @@
 <?php
 
 /**
- * Skrypt parsujπcy KoPS-owy plik HOWELL.DAT do JSONa ≥ykalnego przez aplikacjÍ.
+ * Skrypt parsujƒÖcy KoPS-owy plik HOWELL.DAT do JSONa ≈Çykalnego przez aplikacjƒô.
  *
  * Format pliku movements.json:
- *  - s≥ownik klucz-wartoúÊ
- *  - klucz s≥ownika: X-Y (X - liczba sto≥Ûw, Y - liczba rund; umowne, parsowane dla menu)
- *  - wartoúci - struktura:
- *    - tables: INT, liczba sto≥Ûw
+ *  - s≈Çownik klucz-warto≈õƒá
+ *  - klucz s≈Çownika: X-Y (X - liczba sto≈Ç√≥w, Y - liczba rund; umowne, parsowane dla menu)
+ *  - warto≈õci - struktura:
+ *    - tables: INT, liczba sto≈Ç√≥w
  *    - rounds: INT, liczba rund
- *    - sets: ARRAY[INT], poczπtkowe numery sto≥Ûw dla kolejnych kompletÛw
- *    - movement: ARRAY[STRING], ruch pary nr 1 (pierwszej z par ruchomych), okreúlony kolejnymi pozycjami formatu /[0-9]+[NE]/
- *    - positions: ARRAY[INT], poczπtkowe numery par na kolejnych pozycjach
+ *    - sets: ARRAY[INT], poczƒÖtkowe numery sto≈Ç√≥w dla kolejnych komplet√≥w
+ *    - movement: ARRAY[STRING], ruch pary nr 1 (pierwszej z par ruchomych), okre≈õlony kolejnymi pozycjami formatu /[0-9]+[NE]/
+ *    - positions: ARRAY[INT], poczƒÖtkowe numery par na kolejnych pozycjach
  **/
 
 // Dzielimy plik po liniach "*-----..."
@@ -19,32 +19,32 @@ $file = preg_split('/\*-+/', file_get_contents('howell.dat'));
 $movements = [];
 for ($i = 0; $i < count($file); $i++) {
   // segmenty o nieparzystym indeksie (drugi, czwarty itp.) to dane rotacji
-  // parsowane sπ zawsze PO sparsowaniu segmentu o parzystym indeksie, wiÍc poniøej jest trochÍ zmiennych ustawianych jeszcze niøej
+  // parsowane sƒÖ zawsze PO sparsowaniu segmentu o parzystym indeksie, wiƒôc poni≈ºej jest trochƒô zmiennych ustawianych jeszcze ni≈ºej
   if ($i%2) {
     $matches = [];
-    preg_match_all('/(\d+)/', $file[$i], $matches); // wyciπgamy wszystkie liczby z rotacji (numery par)
-    $sets = array_fill(0, $rounds, 0); // tablica kompletÛw rozdaÒ
+    preg_match_all('/(\d+)/', $file[$i], $matches); // wyciƒÖgamy wszystkie liczby z rotacji (numery par)
+    $sets = array_fill(0, $rounds, 0); // tablica komplet√≥w rozda≈Ñ
     $positions = [];
     $table = 1;
     $set = 0;
     for ($j = 0; $j < count($matches[1]); $j++) {
-      if ((int)$matches[1][$j]) { // mamy niezerowy numerek, wiÍc jest para
+      if ((int)$matches[1][$j]) { // mamy niezerowy numerek, wiƒôc jest para
 		$sets[$set++] = $table++; // zestaw zaczyna na kolejnym stole
 		$positions[] = (int)($matches[1][$j++]); // ustawiamy dwa kolejne numery par
 		$positions[] = (int)($matches[1][$j]);
       }
-      else { // mamy zerowy numerek, wiÍc jest zbiornica
-		$sets[$set++] = 0; // zestaw nie zaczyna na øadnym stole
+      else { // mamy zerowy numerek, wiƒôc jest zbiornica
+		$sets[$set++] = 0; // zestaw nie zaczyna na ≈ºadnym stole
       }
     }
     $movement = [];
     $lines = ['N','E'];
     for ($j = $rounds; $j >= 1; $j--) { // tyle par ruchomych, ile rund
-      $pos = array_search($j, $positions); // odnajdujemy pary ruchome w kolejnoúci X, X-1, ..., 2, 1
-      $movement[] = ceil(($pos+1)/2).$lines[$pos%2]; // i ich pozycjÍ w tablicy $positions t≥umaczymy na pozycjÍ na sali (xN/E), tworzπc wstÍgÍ rotacji
+      $pos = array_search($j, $positions); // odnajdujemy pary ruchome w kolejno≈õci X, X-1, ..., 2, 1
+      $movement[] = ceil(($pos+1)/2).$lines[$pos%2]; // i ich pozycjƒô w tablicy $positions t≈Çumaczymy na pozycjƒô na sali (xN/E), tworzƒÖc wstƒôgƒô rotacji
     }
-	// pozosta≥e pary - z automatu stacjonarne
-	// kompilujemy strukturÍ
+	// pozosta≈Çe pary - z automatu stacjonarne
+	// kompilujemy strukturƒô
     $movements[$id] = [
 		       'tables' => $tables,
 		       'rounds' => $rounds,
@@ -53,7 +53,7 @@ for ($i = 0; $i < count($file); $i++) {
 		       'positions' => $positions
 		       ];
   }
-  // segmenty nieparzyste to dane ogÛlne - liczba rund i sto≥Ûw
+  // segmenty nieparzyste to dane og√≥lne - liczba rund i sto≈Ç√≥w
   else {
     $matches = [];
     preg_match('/.*(-\d+).*RUNDY.*?(\d+).*STOLIKI.*/s', $file[$i], $matches);

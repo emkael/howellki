@@ -1,4 +1,4 @@
-// rozstawienie sto³ów po wirtualnej sali
+// rozstawienie stoÅ‚Ã³w po wirtualnej sali
 var Tables = function(viewport, quantity) {
 
     var that = this;
@@ -8,33 +8,33 @@ var Tables = function(viewport, quantity) {
 
     that.tables = [];
 
-    that.singleDiv = jQuery('<div>').css({position: 'absolute'}).addClass('table'); // reprezentacja pojedynczego sto³u
+    that.singleDiv = jQuery('<div>').css({position: 'absolute'}).addClass('table'); // reprezentacja pojedynczego stoÅ‚u
     that.direction = undefined;
-    that.setDirection = function(direction) { // ustawia orientacjê sali/ustawienie sto³ów
-		var alignment = direction.split('-'); // dzielimy kierunek na sk³adow¹ horyzontaln¹ i wertykaln¹
-		var rows = 2; // sto³y stoj¹ w dwóch rzêdach
+    that.setDirection = function(direction) { // ustawia orientacjÄ™ sali/ustawienie stoÅ‚Ã³w
+		var alignment = direction.split('-'); // dzielimy kierunek na skÅ‚adowÄ… horyzontalnÄ… i wertykalnÄ…
+		var rows = 2; // stoÅ‚y stojÄ… w dwÃ³ch rzÄ™dach
 		var cols = parseInt(Math.ceil(that.quantity / 2)); // i w tylu kolumnach, ilu trzeba
-		if (alignment[0] == 'top' || alignment[0] == 'bottom') { // chyba, ¿e stoj¹ w drug¹ stronê
-			rows = cols; // to wtedy w tylu rzêdach, ilu kolumnach i w w tylu kolumnach, ile 2.
+		if (alignment[0] == 'top' || alignment[0] == 'bottom') { // chyba, Å¼e stojÄ… w drugÄ… stronÄ™
+			rows = cols; // to wtedy w tylu rzÄ™dach, ilu kolumnach i w w tylu kolumnach, ile 2.
 			cols = 2;
 		}
-		var width = that.viewport.width / cols; // wyznaczamy rozmiar obszaru zajmowanego przez pojedynczy stó³
+		var width = that.viewport.width / cols; // wyznaczamy rozmiar obszaru zajmowanego przez pojedynczy stÃ³Å‚
 		var height = that.viewport.height / rows;
-		that.dim = Math.min(width, height) * 0.5; // stó³ zajmuje d³u¿szym bokiem (mimo, ¿e jest kwadratowy, jeden bok jest wzglêdnie d³u¿szy wobec w/w obszaru) po³owê przeznaczonego obszaru
+		that.dim = Math.min(width, height) * 0.5; // stÃ³Å‚ zajmuje dÅ‚uÅ¼szym bokiem (mimo, Å¼e jest kwadratowy, jeden bok jest wzglÄ™dnie dÅ‚uÅ¼szy wobec w/w obszaru) poÅ‚owÄ™ przeznaczonego obszaru
 		that.singleDiv.css({height: that.dim, width: that.dim});
 		var positions = [];
 		for (var i = 0; i < that.quantity; i++) { // pozycjonujemy kolejne stoliki (w przestrzeni (0,0) - (1,1))
 			var position = { top: 0, left: 0 };
 			switch (alignment[1]) {
-			case 'straight': // w dwóch rzêdach/kolumnach
+			case 'straight': // w dwÃ³ch rzÄ™dach/kolumnach
 				position.top = parseInt(Math.floor(2 * i / that.quantity));
 				position.left = i % parseInt((that.quantity+1) / 2);
 			break;
-			case 'uturn': // w dwóch rzêdach/kolumnach, ale zakrêcaj¹
+			case 'uturn': // w dwÃ³ch rzÄ™dach/kolumnach, ale zakrÄ™cajÄ…
 				position.top = parseInt(Math.floor(2 * i / that.quantity));
 				position.left = Math.min(i, (that.quantity-1-i));
 			break;
-			case 'snake': // wê¿ykiem
+			case 'snake': // wÄ™Å¼ykiem
 				position.top = i % 4;
 				position.top = Math.min(position.top, 3 - position.top);
 				position.left = parseInt(Math.floor(i / 2));
@@ -42,7 +42,7 @@ var Tables = function(viewport, quantity) {
 			}
 			positions[i] = position;
 		}
-		if (that.quantity % 2) { // nieparzysty stolik wysuwamy na œrodek, dla wê¿yka - ostatni, dla pozosta³ych - œrodkowy
+		if (that.quantity % 2) { // nieparzysty stolik wysuwamy na Å›rodek, dla wÄ™Å¼yka - ostatni, dla pozostaÅ‚ych - Å›rodkowy
 			var skewed = (alignment[1] == 'snake') ? (that.quantity - 1) : ((that.quantity - 1) / 2);
 			positions[skewed].top = 0.5;
 		}
@@ -79,7 +79,7 @@ var Tables = function(viewport, quantity) {
 		}
     }
 
-    that.getPosition = function(position, size) { // podaje wspó³rzêdne pikselowe dla danej pozycji zawodnika (/[0-9]+[WNES]/) lub sto³u
+    that.getPosition = function(position, size) { // podaje wspÃ³Å‚rzÄ™dne pikselowe dla danej pozycji zawodnika (/[0-9]+[WNES]/) lub stoÅ‚u
 		var pos = position.toString().match(/^(\d+)([NEWS]?)$/);
 		if (!pos) {
 			throw 'Illegal position';
@@ -91,25 +91,25 @@ var Tables = function(viewport, quantity) {
 		var offset = { left: parseInt(that.tables[tableNo-1].css('left')),
 				   top: parseInt(that.tables[tableNo-1].css('top')) };
 		switch (pos[2]) {
-		case 'N': // N u góry
+		case 'N': // N u gÃ³ry
 			offset.left += that.dim / 2;
 			break;
 		case 'E': // E po prawej
 			offset.left += that.dim;
 			offset.top += that.dim / 2;
 			break;
-		case 'S': // S u do³u
+		case 'S': // S u doÅ‚u
 			offset.left += that.dim / 2;
 			offset.top += that.dim;
 			break;
 		case 'W': // W po lewej
 			offset.top += that.dim / 2;
 			break;
-		default: // stó³ od lewej góry
+		default: // stÃ³Å‚ od lewej gÃ³ry
 			offset.top += that.dim / 2;
 			offset.left += that.dim / 2;
 		}
-		if (size) { // jeœli podajemy rozmiar pikselowy stolika, dostajemy korektê na œrodek sto³u
+		if (size) { // jeÅ›li podajemy rozmiar pikselowy stolika, dostajemy korektÄ™ na Å›rodek stoÅ‚u
 			offset.top -= size/2;
 			offset.left -= size/2;
 		}
@@ -127,11 +127,11 @@ var Tables = function(viewport, quantity) {
 // para.
 var Pair = function(startingPosition, number, movement) {
     var that = this;
-    that.players = [ startingPosition, startingPosition.replace("N", "S").replace("E", "W") ]; // para sk³ada siê z 2 graczy, N gra z S, E gra z W
+    that.players = [ startingPosition, startingPosition.replace("N", "S").replace("E", "W") ]; // para skÅ‚ada siÄ™ z 2 graczy, N gra z S, E gra z W
     that.number = number;
     that.movement = movement;
     that.containers = [];
-    that.size = that.movement.tables.dim * 0.3; // para ma rozmiar 30% obszaru stolika. sprawdziæ, czy nie gra Klichowicz.
+    that.size = that.movement.tables.dim * 0.3; // para ma rozmiar 30% obszaru stolika. sprawdziÄ‡, czy nie gra Klichowicz.
     that.colour = '#'+('00000'+(Math.random()*(1<<24)|0).toString(16)).slice(-6); // para ma jeden kolor, ale losowy
     for (var i = 0; i < 2; i++) {
 		that.containers[i] = jQuery('<div>').addClass('player').css({backgroundColor: that.colour, position: 'absolute', lineHeight: that.size+'px', width: that.size, height: that.size, borderRadius: that.size}).text(that.number);
@@ -139,13 +139,13 @@ var Pair = function(startingPosition, number, movement) {
 
     that.moveTo = function(position) {
 		for (var i = 0; i < 2; i++) {
-			if (position) { // przesuwamy parê na okreœlon¹ pozycjê
+			if (position) { // przesuwamy parÄ™ na okreÅ›lonÄ… pozycjÄ™
 				that.players[i] = position;
 				var pos = that.movement.tables.getPosition(position, that.size);
 				that.containers[i].animate(pos, 1000);
 				position = position.replace('N', 'S').replace('E', 'W');
 			}
-			else { // albo koñczymy turniej i œci¹gamy j¹ do rogu
+			else { // albo koÅ„czymy turniej i Å›ciÄ…gamy jÄ… do rogu
 				that.containers[i].animate({left: 0, top: 0}, 1000);
 			}
 		}
@@ -154,12 +154,12 @@ var Pair = function(startingPosition, number, movement) {
     that.display = function() {
 		for (var i = 0; i < 2; i++) {
 			movement.viewport.container.append(that.containers[i]);
-			that.containers[i].animate(that.movement.tables.getPosition(that.players[i], that.size), 1000); // wypuszczamy zawodników na salê
+			that.containers[i].animate(that.movement.tables.getPosition(that.players[i], that.size), 1000); // wypuszczamy zawodnikÃ³w na salÄ™
 		}
     }
 }
 
-// pude³ko rozdaniowe
+// pudeÅ‚ko rozdaniowe
 var Set = function(startingPosition, movement, number) {
     var that = this;
     that.movement = movement;
@@ -169,20 +169,20 @@ var Set = function(startingPosition, movement, number) {
     that.size = that.movement.tables.dim * 0.2;
     that.container = jQuery('<div>').addClass('cards').css({position: 'absolute', width: that.size, height: that.size*1.5, backgroundColor: that.colour, top: that.movement.viewport.height-that.size}).text(that.number);
 
-    that.getPosition = function(position) { // translacja pozycji na pozycjê w pikselach
+    that.getPosition = function(position) { // translacja pozycji na pozycjÄ™ w pikselach
 		var pos;
-		if (parseInt(position) == pos && position > 0) { // jeœli rozdanie le¿y na stole, to le¿y na stole
+		if (parseInt(position) == pos && position > 0) { // jeÅ›li rozdanie leÅ¼y na stole, to leÅ¼y na stole
 			pos = that.movement.tables.getPosition(position, that.size);
 		}
-		else { // jesli nie lezy na stole, le¿y na zbiornicy
+		else { // jesli nie lezy na stole, leÅ¼y na zbiornicy
 			var after = parseInt(position);
 			pos = that.movement.tables.getPosition(after, that.size);
 			var afterPos = that.movement.tables.getPosition(after%that.movement.tables.quantity+1, that.size);
-			if (after == that.movement.tables.quantity) { // zbiornica na koñcu sali
+			if (after == that.movement.tables.quantity) { // zbiornica na koÅ„cu sali
 				pos.top = Math.min(Math.max(0, pos.top + (pos.top - afterPos.top) * (position - after)), that.movement.viewport.height - that.size);
 				pos.left = Math.min(Math.max(0, pos.left + (pos.left - afterPos.left) * (position - after)), that.movement.viewport.width - that.size);
 			}
-			else { // zbiornica miêdzy sto³ami
+			else { // zbiornica miÄ™dzy stoÅ‚ami
 				pos.top = Math.min(Math.max(0, pos.top + (afterPos.top - pos.top) * (position - after)), that.movement.viewport.height - that.size);
 				pos.left = Math.min(Math.max(0, pos.left + (afterPos.left - pos.left) * (position - after)), that.movement.viewport.width - that.size);
 			}
@@ -197,13 +197,13 @@ var Set = function(startingPosition, movement, number) {
 			that.container.animate(that.getPosition(position), 1000);
 		}
 		else {
-			that.container.animate({left: 0, top: that.movement.viewport.height - that.size}, 1000); // na koniec turnieju œci¹gamy rozdania
+			that.container.animate({left: 0, top: that.movement.viewport.height - that.size}, 1000); // na koniec turnieju Å›ciÄ…gamy rozdania
 		}
     }
 
     that.display = function() {
 		that.movement.viewport.container.append(that.container);
-		that.moveTo(that.position); // rozdania puszczane na salê
+		that.moveTo(that.position); // rozdania puszczane na salÄ™
     }
 }
 
@@ -233,7 +233,7 @@ var Movement = function(viewport, movement, tables, summary) {
 		else { // komplet zaczyna na zbiornicy
 			emptySets++;
 			for (var j = i - emptySets + 1; j <= i; j++) {
-				that.data.sets[j] = lastTable + 0.25 + 0.5*(j - i + emptySets)/(emptySets+1); // wiêc jest na wirtualnym stoliku u³amkowym
+				that.data.sets[j] = lastTable + 0.25 + 0.5*(j - i + emptySets)/(emptySets+1); // wiÄ™c jest na wirtualnym stoliku uÅ‚amkowym
 			}
 		}
     }
@@ -242,19 +242,19 @@ var Movement = function(viewport, movement, tables, summary) {
 		that.sets[i].display();
     }
 	
-	// krok g³ównej pêtli rotacji
+	// krok gÅ‚Ã³wnej pÄ™tli rotacji
     that.step = function() {
 		if (summary) {
-			summary.update(that); // aktualizacja tabelki krzy¿owej
+			summary.update(that); // aktualizacja tabelki krzyÅ¼owej
 		}
 		if (that.round < that.data.rounds) { // przechodzimy do kolejnej rundy...
 			for (var p in that.pairs) {
 				var position = that.pairs[p].players[0];
 				var ind = that.data.movement.indexOf(position);
-				if (ind > -1) { // pary chodz¹ce (obecne w rotacji z movements.json) chodz¹
+				if (ind > -1) { // pary chodzÄ…ce (obecne w rotacji z movements.json) chodzÄ…
 					that.pairs[p].moveTo(that.data.movement[(ind+1)%that.data.movement.length]);
 				}
-				else { // pozosta³e siedz¹, ale musimy je najpierw usadziæ
+				else { // pozostaÅ‚e siedzÄ…, ale musimy je najpierw usadziÄ‡
 					that.pairs[p].moveTo(position);
 				}
 			}
@@ -265,7 +265,7 @@ var Movement = function(viewport, movement, tables, summary) {
 			that.round++;
 			return true;
 		}
-		else { // ...albo zwijamy siê z sali
+		else { // ...albo zwijamy siÄ™ z sali
 			for (var p in that.pairs) {
 				that.pairs[p].moveTo();
 			}
@@ -277,14 +277,14 @@ var Movement = function(viewport, movement, tables, summary) {
     }
 }
 
-// tabelka krzy¿ówki
+// tabelka krzyÅ¼Ã³wki
 var Summary = function(pairs) {
 
     var that = this;
 
     that.pairs = pairs;
     that.table = jQuery('<table>').addClass('summary');
-	// generujemy tabelk¹ z pustymi komórkami, ew. nag³ówkami
+	// generujemy tabelkÄ… z pustymi komÃ³rkami, ew. nagÅ‚Ã³wkami
     for (var i = 0; i <= that.pairs; i++) {
 		var row = jQuery('<tr>');
 		for (var j = 0; j <= that.pairs; j++) {
@@ -314,7 +314,7 @@ var Summary = function(pairs) {
 			played[t] = { set: movement.data.sets.indexOf(t),
 				  pairs: [] };
 		}
-		// oznaczanie rozdañ (kompletów) rozegranych przez pary
+		// oznaczanie rozdaÅ„ (kompletÃ³w) rozegranych przez pary
 		for (var p in movement.pairs) {
 			played[parseInt(movement.pairs[p].players[0])].pairs.push(parseInt(p));
 		}
