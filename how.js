@@ -152,7 +152,7 @@ var Pair = function(startingPosition, number, movement) {
     that.display = function() {
 	for (var i = 0; i < 2; i++) {
 	    movement.viewport.container.append(that.containers[i]);
-	    that.containers[i].animate(that.movement.tables.getPosition(that.players[i], that.size), 1000
+	    that.containers[i].animate(that.movement.tables.getPosition(that.players[i], that.size), 1000);
 	}
     }
 }
