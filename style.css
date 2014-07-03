@@ -1,0 +1,128 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Georgia';
+}
+
+.selector {
+    position: fixed;
+    top: 0;
+    right: 0;
+    background-color: grey;
+    height: 375px;
+    color: white;
+    z-index: 100;
+    border: solid 1px black;
+}
+
+.selector .list {
+    width: 500px;
+    display: none;
+    float: left;
+    padding-top: 5px;
+}
+
+.selector:hover .list {
+    display: block;
+}
+
+.selector .lollipop {
+    text-align: center;
+    width: 50px;
+    font-size: 32px;
+    cursor: pointer;
+    float: left;
+}
+
+.selector .list-row {
+    clear: both;
+    margin-top: 5px;
+    height: 15px;
+}
+
+.selector .list-movement {
+    float: left;
+    margin: 0 5px;
+    width: 15px;
+    text-align: right;
+    margin-right: 35px;
+}
+
+.selector .list-movement[data-movement] {
+    text-decoration: underline;
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+.viewport {
+    margin: 5px 0 0 5px;
+    border: solid 1px black;
+    background-color: grey;
+    overflow: hidden;
+    float: left;
+}
+
+.table {
+    border: solid 2px black;
+    background-color: #25A282;
+    color: white;
+    font-weight: bold;
+}
+
+.player {
+    border: solid 1px black;
+    text-align: center;
+}
+
+.player,
+table.summary th {
+    color: white;
+    font-weight: normal;
+    text-shadow:
+    -1px -1px 0 black,  
+    1px -1px 0 black,
+    -1px 1px 0 black,
+    1px 1px 0 black;
+}
+
+.cards {
+    border: solid 2px white;
+    border-radius: 3px;
+    color: white;
+    font-size: 10px;
+    text-align: right;
+}
+
+.summary {
+    float: left;
+    margin: 5px;
+}
+
+table.summary td {
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    color: white;
+}
+
+.controls {
+    position: fixed;
+    top: 400px;
+    right: 0px;
+}
+
+.controls .play,
+.controls .stop,
+.controls .step {
+    width: 50px;
+    height: 30px;
+    background-color: grey;
+    color: white;
+    font-size: 12px;
+    line-height: 30px;
+    float: left;
+    cursor: pointer;
+    margin: 10px;
+    text-align: center;
+    border: solid 1px black;
+}
