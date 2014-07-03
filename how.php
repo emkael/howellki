@@ -10,7 +10,7 @@
  *    - tables: INT, liczba sto³ów
  *    - rounds: INT, liczba rund
  *    - sets: ARRAY[INT], pocz¹tkowe numery sto³ów dla kolejnych kompletów
- *    - movement: ARRAY[STRING], ruch pary nr 1 (pierwszej z par ruchomych), okreœlony kolejnymi pozycjami formatu /[0-9][NE]/
+ *    - movement: ARRAY[STRING], ruch pary nr 1 (pierwszej z par ruchomych), okreœlony kolejnymi pozycjami formatu /[0-9]+[NE]/
  *    - positions: ARRAY[INT], pocz¹tkowe numery par na kolejnych pozycjach
  **/
 
