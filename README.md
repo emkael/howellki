@@ -39,4 +39,4 @@ Licencja
 Program udostępniany jest na licencji [GPL wersji 2](http://www.gnu.org/licenses/gpl-2.0.html).
 
 ***
-`And the things you can't remember tell the things you can forget.`
+`And the things you can't remember tell the things you can't forget.`
