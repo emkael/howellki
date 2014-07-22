@@ -1,16 +1,16 @@
 // rozstawienie stołów po wirtualnej sali
 var Tables = function(viewport, quantity) {
 
-    var that = this;
-    that.quantity = quantity;
-    that.viewport = viewport;
-    that.dim = 0;
+   var that = this;
+   that.quantity = quantity;
+   that.viewport = viewport;
+   that.dim = 0;
 
-    that.tables = [];
+   that.tables = [];
 
-    that.singleDiv = jQuery('<div>').css({position: 'absolute'}).addClass('table'); // reprezentacja pojedynczego stołu
-    that.direction = undefined;
-    that.setDirection = function(direction) { // ustawia orientację sali/ustawienie stołów
+   that.singleDiv = jQuery('<div>').css({position: 'absolute'}).addClass('table'); // reprezentacja pojedynczego stołu
+   that.direction = undefined;
+   that.setDirection = function(direction) { // ustawia orientację sali/ustawienie stołów
 		var alignment = direction.split('-'); // dzielimy kierunek na składową horyzontalną i wertykalną
 		var rows = 2; // stoły stoją w dwóch rzędach
 		var cols = parseInt(Math.ceil(that.quantity / 2)); // i w tylu kolumnach, ilu trzeba
@@ -29,16 +29,16 @@ var Tables = function(viewport, quantity) {
 			case 'straight': // w dwóch rzędach/kolumnach
 				position.top = parseInt(Math.floor(2 * i / that.quantity));
 				position.left = i % parseInt((that.quantity+1) / 2);
-			break;
+			   break;
 			case 'uturn': // w dwóch rzędach/kolumnach, ale zakręcają
 				position.top = parseInt(Math.floor(2 * i / that.quantity));
 				position.left = Math.min(i, (that.quantity-1-i));
-			break;
+			   break;
 			case 'snake': // wężykiem
 				position.top = i % 4;
 				position.top = Math.min(position.top, 3 - position.top);
 				position.left = parseInt(Math.floor(i / 2));
-			break;
+			   break;
 			}
 			positions[i] = position;
 		}
@@ -55,31 +55,31 @@ var Tables = function(viewport, quantity) {
 				positions[i].left += (width-that.dim)/(width*2);
 				positions[i].top += (height-that.dim)/(height*2);
 				that.tables[i].css({left: positions[i].left * width,
-							top: positions[i].top * height});
-			break;
+							           top: positions[i].top * height});
+			   break;
 			case 'right':
 				positions[i].left -= (width-that.dim)/(width*2);
 				positions[i].top += (height-that.dim)/(height*2);
 				that.tables[i].css({left: (Math.ceil(that.quantity / 2) - positions[i].left - 1) * width,
-							top: positions[i].top * height});
-			break;
+							           top: positions[i].top * height});
+			   break;
 			case 'top':
 				positions[i].left += (height-that.dim)/(height*2);
 				positions[i].top += (width-that.dim)/(width*2);
 				that.tables[i].css({top: positions[i].left * height,
-							left: positions[i].top * width});
-			break;
+							           left: positions[i].top * width});
+			   break;
 			case 'bottom':
 				positions[i].left -= (height-that.dim)/(height*2);
 				positions[i].top += (width-that.dim)/(width*2);
 				that.tables[i].css({top: (Math.ceil(that.quantity / 2) - positions[i].left - 1) * height,
-							left: positions[i].top * width});
-			break;
+							           left: positions[i].top * width});
+			   break;
 			}
 		}
-    }
+   }
 
-    that.getPosition = function(position, size) { // podaje współrzędne pikselowe dla danej pozycji zawodnika (/[0-9]+[WNES]/) lub stołu
+   that.getPosition = function(position, size) { // podaje współrzędne pikselowe dla danej pozycji zawodnika (/[0-9]+[WNES]/) lub stołu
 		var pos = position.toString().match(/^(\d+)([NEWS]?)$/);
 		if (!pos) {
 			throw 'Illegal position';
@@ -89,7 +89,7 @@ var Tables = function(viewport, quantity) {
 			throw 'Table number out of range';
 		}
 		var offset = { left: parseInt(that.tables[tableNo-1].css('left')),
-				   top: parseInt(that.tables[tableNo-1].css('top')) };
+				         top: parseInt(that.tables[tableNo-1].css('top')) };
 		switch (pos[2]) {
 		case 'N': // N u góry
 			offset.left += that.dim / 2;
@@ -120,24 +120,24 @@ var Tables = function(viewport, quantity) {
 		for (var i = 0; i < that.tables.length; i++) {
 			that.viewport.container.append(that.tables[i]);
 		}
-    }
+   }
 
 };
 
 // para.
 var Pair = function(startingPosition, number, movement) {
-    var that = this;
-    that.players = [ startingPosition, startingPosition.replace("N", "S").replace("E", "W") ]; // para składa się z 2 graczy, N gra z S, E gra z W
-    that.number = number;
-    that.movement = movement;
-    that.containers = [];
-    that.size = that.movement.tables.dim * 0.3; // para ma rozmiar 30% obszaru stolika. sprawdzić, czy nie gra Klichowicz.
-    that.colour = '#'+('00000'+(Math.random()*(1<<24)|0).toString(16)).slice(-6); // para ma jeden kolor, ale losowy
-    for (var i = 0; i < 2; i++) {
+   var that = this;
+   that.players = [ startingPosition, startingPosition.replace("N", "S").replace("E", "W") ]; // para składa się z 2 graczy, N gra z S, E gra z W
+   that.number = number;
+   that.movement = movement;
+   that.containers = [];
+   that.size = that.movement.tables.dim * 0.3; // para ma rozmiar 30% obszaru stolika. sprawdzić, czy nie gra Klichowicz.
+   that.colour = '#'+('00000'+(Math.random()*(1<<24)|0).toString(16)).slice(-6); // para ma jeden kolor, ale losowy
+   for (var i = 0; i < 2; i++) {
 		that.containers[i] = jQuery('<div>').addClass('player').css({backgroundColor: that.colour, position: 'absolute', lineHeight: that.size+'px', width: that.size, height: that.size, borderRadius: that.size}).text(that.number);
-    }
+   }
 
-    that.moveTo = function(position) {
+   that.moveTo = function(position) {
 		for (var i = 0; i < 2; i++) {
 			if (position) { // przesuwamy parę na określoną pozycję
 				that.players[i] = position;
@@ -149,27 +149,27 @@ var Pair = function(startingPosition, number, movement) {
 				that.containers[i].animate({left: 0, top: 0}, 1000);
 			}
 		}
-    }
+   }
 
-    that.display = function() {
+   that.display = function() {
 		for (var i = 0; i < 2; i++) {
 			movement.viewport.container.append(that.containers[i]);
 			that.containers[i].animate(that.movement.tables.getPosition(that.players[i], that.size), 1000); // wypuszczamy zawodników na salę
 		}
-    }
+   }
 }
 
 // pudełko rozdaniowe
 var Set = function(startingPosition, movement, number) {
-    var that = this;
-    that.movement = movement;
-    that.number = number;
-    that.position = startingPosition;
-    that.colour = '#'+('00000'+(Math.random()*(1<<24)|0).toString(16)).slice(-6); // losowy kolor
-    that.size = that.movement.tables.dim * 0.2;
-    that.container = jQuery('<div>').addClass('cards').css({position: 'absolute', width: that.size, height: that.size*1.5, backgroundColor: that.colour, top: that.movement.viewport.height-that.size}).text(that.number);
+   var that = this;
+   that.movement = movement;
+   that.number = number;
+   that.position = startingPosition;
+   that.colour = '#'+('00000'+(Math.random()*(1<<24)|0).toString(16)).slice(-6); // losowy kolor
+   that.size = that.movement.tables.dim * 0.2;
+   that.container = jQuery('<div>').addClass('cards').css({position: 'absolute', width: that.size, height: that.size*1.5, backgroundColor: that.colour, top: that.movement.viewport.height-that.size}).text(that.number);
 
-    that.getPosition = function(position) { // translacja pozycji na pozycję w pikselach
+   that.getPosition = function(position) { // translacja pozycji na pozycję w pikselach
 		var pos;
 		if (parseInt(position) == pos && position > 0) { // jeśli rozdanie leży na stole, to leży na stole
 			pos = that.movement.tables.getPosition(position, that.size);
@@ -189,9 +189,9 @@ var Set = function(startingPosition, movement, number) {
 		}
 		pos.top -= that.size * 0.25;
 		return pos;
-    }
+   }
 
-    that.moveTo = function(position) {
+   that.moveTo = function(position) {
 		that.position = position;
 		if (position) {
 			that.container.animate(that.getPosition(position), 1000);
@@ -199,33 +199,33 @@ var Set = function(startingPosition, movement, number) {
 		else {
 			that.container.animate({left: 0, top: that.movement.viewport.height - that.size}, 1000); // na koniec turnieju ściągamy rozdania
 		}
-    }
+   }
 
-    that.display = function() {
+   that.display = function() {
 		that.movement.viewport.container.append(that.container);
 		that.moveTo(that.position); // rozdania puszczane na salę
-    }
+   }
 }
 
 // reprezentacja schematu
 var Movement = function(viewport, movement, tables, summary) {
-    var that = this;
-    that.viewport = viewport;
-    that.data = movement;
-    that.tables = tables;
-    that.round = 1;
-    that.summary = summary;
+   var that = this;
+   that.viewport = viewport;
+   that.data = movement;
+   that.tables = tables;
+   that.round = 1;
+   that.summary = summary;
 
-    that.pairs = [];
-    for (var i = 0; i < tables.quantity * 2; i++) { // rozstawiamy pary z kolejnych pozycji z movements.json
+   that.pairs = [];
+   for (var i = 0; i < tables.quantity * 2; i++) { // rozstawiamy pary z kolejnych pozycji z movements.json
 		that.pairs[that.data.positions[i]] = new Pair(parseInt(Math.ceil((i+1)/2)) + ['N','E'][i%2], that.data.positions[i], that);
 		that.pairs[that.data.positions[i]].display();
-    }
+   }
 
-    that.sets = [];
-    var lastTable = 0;
-    var emptySets = 0;
-    for (var i = 0; i < that.data.sets.length; i++) { // kolejne komplety z movements.json
+   that.sets = [];
+   var lastTable = 0;
+   var emptySets = 0;
+   for (var i = 0; i < that.data.sets.length; i++) { // kolejne komplety z movements.json
 		if (that.data.sets[i]) { // komplet zaczyna na stoliku
 			lastTable = that.data.sets[i];
 			emptySets = 0;
@@ -236,14 +236,14 @@ var Movement = function(viewport, movement, tables, summary) {
 				that.data.sets[j] = lastTable + 0.25 + 0.5*(j - i + emptySets)/(emptySets+1); // więc jest na wirtualnym stoliku ułamkowym
 			}
 		}
-    }
-    for (var i = 0; i < that.data.sets.length; i++) {
+   }
+   for (var i = 0; i < that.data.sets.length; i++) {
 		that.sets[i] = new Set(that.data.sets[i], that, i+1);
 		that.sets[i].display();
-    }
-	
+   }
+
 	// krok głównej pętli rotacji
-    that.step = function() {
+   that.step = function() {
 		if (summary) {
 			summary.update(that); // aktualizacja tabelki krzyżowej
 		}
@@ -274,18 +274,18 @@ var Movement = function(viewport, movement, tables, summary) {
 			}
 			return false;
 		}
-    }
+   }
 }
 
 // tabelka krzyżówki
 var Summary = function(pairs) {
 
-    var that = this;
+   var that = this;
 
-    that.pairs = pairs;
-    that.table = jQuery('<table>').addClass('summary');
+   that.pairs = pairs;
+   that.table = jQuery('<table>').addClass('summary');
 	// generujemy tabelką z pustymi komórkami, ew. nagłówkami
-    for (var i = 0; i <= that.pairs; i++) {
+   for (var i = 0; i <= that.pairs; i++) {
 		var row = jQuery('<tr>');
 		for (var j = 0; j <= that.pairs; j++) {
 			var cell;
@@ -303,16 +303,16 @@ var Summary = function(pairs) {
 			row.append(cell);
 		}
 		that.table.append(row);
-    }
+   }
 
-    that.update = function(movement) {
+   that.update = function(movement) {
 		for (var pair in movement.pairs) { // kolorujemy pary
 			that.table.find('th:contains('+movement.pairs[pair].number+')').css({backgroundColor: movement.pairs[pair].colour});
 		}
 		var played = [];
 		for (var t = 1; t <= movement.tables.quantity; t++) {
 			played[t] = { set: movement.data.sets.indexOf(t),
-				  pairs: [] };
+				           pairs: [] };
 		}
 		// oznaczanie rozdań (kompletów) rozegranych przez pary
 		for (var p in movement.pairs) {
@@ -324,48 +324,48 @@ var Summary = function(pairs) {
 			cell.css({backgroundColor: movement.sets[played[pl].set].colour});
 			cell.text(pl);
 		}
-    }
-    
-    that.clear = function() {
-		that.table.remove();
-    }
+   }
 
-    that.render = function(where) {
+   that.clear = function() {
+		that.table.remove();
+   }
+
+   that.render = function(where) {
 		if (!where) {
 			where = jQuery('body');
 		}
 		jQuery(where).append(that.table);
-    }
+   }
 }
 
 var Viewport = function(width, height) {
-    var that = this;
-    that.width = width;
-    that.height = height;
-    that.container = jQuery('<div>').css({height: that.height, width: that.width, position: 'relative'}).addClass('viewport');
+   var that = this;
+   that.width = width;
+   that.height = height;
+   that.container = jQuery('<div>').css({height: that.height, width: that.width, position: 'relative'}).addClass('viewport');
 
-    that.clear = function() {
+   that.clear = function() {
 		that.container.html('');
-    }
+   }
 
-    that.render = function(where) {
+   that.render = function(where) {
 		if (!where) {
 			where = jQuery('body');
 		}
 		jQuery(where).append(that.container);
-    }
+   }
 };
 
 var Control = function(movement) {
-    var that = this;
+   var that = this;
 
-    that.movement = movement;
+   that.movement = movement;
 
-    that.setMovement = function(movement) {
+   that.setMovement = function(movement) {
 		that.movement = movement;
-    }
+   }
 
-    that.step = function() {
+   that.step = function() {
 		if (!that.movement.step()) {
 			that.stop();
 			that.container.hide();
@@ -373,48 +373,48 @@ var Control = function(movement) {
 		if (that.autoplay) {
 			that.autoTimeout = setTimeout(that.step, 1500);
 		}
-    }
+   }
 
-    that.autoplay = false;
-    that.autoTimeout = undefined;
-    that.play = function() {
+   that.autoplay = false;
+   that.autoTimeout = undefined;
+   that.play = function() {
 		that.autoplay = true;
 		that.step();
 		that.playButton.hide();
 		that.stopButton.show();
 		that.stepButton.hide();
-    }
+   }
 
-    that.stop = function() {
+   that.stop = function() {
 		that.autoplay = false;
 		clearTimeout(that.autoTimeout);
 		that.stopButton.hide();
 		that.playButton.show();
 		that.stepButton.show();
-    }
+   }
 
 
-    that.container = jQuery('<div>').addClass('controls');
+   that.container = jQuery('<div>').addClass('controls');
 
-    that.stepButton = jQuery('<div>').addClass('step').text('>|');
-    that.playButton = jQuery('<div>').addClass('play').text('>');
-    that.stopButton = jQuery('<div>').addClass('stop').text('||');
+   that.stepButton = jQuery('<div>').addClass('step').text('>|');
+   that.playButton = jQuery('<div>').addClass('play').text('>');
+   that.stopButton = jQuery('<div>').addClass('stop').text('||');
 
-    that.container.append(that.stepButton).append(that.playButton).append(that.stopButton);
-    jQuery('body').append(that.container);
+   that.container.append(that.stepButton).append(that.playButton).append(that.stopButton);
+   jQuery('body').append(that.container);
 
-    that.stepButton.bind('click', that.step);
-    that.playButton.bind('click', that.play);
-    that.stopButton.bind('click', that.stop);
+   that.stepButton.bind('click', that.step);
+   that.playButton.bind('click', that.play);
+   that.stopButton.bind('click', that.stop);
 
 }
 
 jQuery(document).ready(function() {
-    var vp = new Viewport(jQuery(window).width()*0.6, jQuery(window).height()*0.9);
-    vp.render();
-    var movements;
-    var moveList = jQuery('.selector .list');
-    jQuery.getJSON('movements.json', function(data) {
+   var vp = new Viewport(jQuery(window).width()*0.6, jQuery(window).height()*0.9);
+   vp.render();
+   var movements;
+   var moveList = jQuery('.selector .list');
+   jQuery.getJSON('movements.json', function(data) {
 		movements = data;
 		for (var m in movements) {
 			var move = m.split('-');
@@ -447,5 +447,5 @@ jQuery(document).ready(function() {
 			control.setMovement(move);
 			control.container.show();
 		});
-    });
+   });
 });
