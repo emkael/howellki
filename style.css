@@ -79,7 +79,7 @@ table.summary th {
     color: white;
     font-weight: normal;
     text-shadow:
-    -1px -1px 0 black,  
+    -1px -1px 0 black,
     1px -1px 0 black,
     -1px 1px 0 black,
     1px 1px 0 black;
@@ -125,4 +125,12 @@ table.summary td {
     margin: 10px;
     text-align: center;
     border: solid 1px black;
+}
+
+.info {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 250px;
+    height: 150px;
 }
