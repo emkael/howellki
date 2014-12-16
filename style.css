@@ -6,7 +6,6 @@ body {
 
 .selector {
     background-color: grey;
-    height: 395px;
     color: white;
     z-index: 100;
     border: solid 1px black;
