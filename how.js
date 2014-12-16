@@ -352,7 +352,7 @@ var Viewport = function(width, height) {
 		if (!where) {
 			where = jQuery('body');
 		}
-		jQuery(where).append(that.container);
+		jQuery(where).prepend(that.container);
    }
 };
 
@@ -410,7 +410,7 @@ var Control = function(movement) {
 }
 
 jQuery(document).ready(function() {
-   var vp = new Viewport(jQuery(window).width()*0.6, jQuery(window).height()*0.9);
+   var vp = new Viewport(jQuery(window).width()*0.70, jQuery(window).height()*0.9);
    vp.render();
    var movements;
    var moveList = jQuery('.selector .list');

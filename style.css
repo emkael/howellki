@@ -5,25 +5,22 @@ body {
 }
 
 .selector {
-    position: fixed;
-    top: 0;
-    right: 0;
     background-color: grey;
     height: 395px;
     color: white;
     z-index: 100;
     border: solid 1px black;
+    min-width: 280px;
+    width: 25%;
+    margin-top: 5px;
+    padding: 5px;
+    overflow: hidden;
 }
 
 .selector .list {
     width: 500px;
-    display: none;
     float: left;
     padding-top: 5px;
-}
-
-.selector:hover .list {
-    display: block;
 }
 
 .selector .lollipop {
@@ -106,9 +103,6 @@ table.summary td {
 }
 
 .controls {
-    position: fixed;
-    top: 400px;
-    right: 0px;
 }
 
 .controls .play,
@@ -127,10 +121,12 @@ table.summary td {
     border: solid 1px black;
 }
 
+.rightPane {
+    float: right;
+    width: 25%;
+}
+
 .info {
-    position: fixed;
-    bottom: 0;
-    right: 0;
     width: 250px;
     height: 150px;
 }
