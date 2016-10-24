@@ -420,7 +420,7 @@ jQuery(document).ready(function() {
 			var move = m.split('-');
 			var listCell = jQuery('<div>').addClass('list-movement').attr('data-movement', m).text(move[0]);
 			var listRow = moveList.find('div[data-rounds="'+move[1]+'"]');
-			if (listRow.size()) {
+			if (listRow.length) {
 				listRow.append(listCell);
 			}
 			else {
